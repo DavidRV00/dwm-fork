@@ -33,10 +33,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
-	{ NULL,       NULL,       NULL,       0,            1,           0,           -1 },
-	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
-	{ "mpv",      NULL,       NULL,       1 << 1,       0,           0,           -1 },
+ 	/* class      instance    title       tags mask     iscentered   isfloating   monitor    scratch key */
+	{ NULL,       NULL,       NULL,       0,            1,           0,           -1,        0 },
+ 	{ NULL,       NULL,   "scratchpad",   0,            1,           1,           -1,       's' },
+	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1,        0 },
+	{ "mpv",      NULL,       NULL,       1 << 1,       0,           0,           -1,        0 },
 };
 
 /* layout(s) */
@@ -71,10 +72,14 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-b", "-m", dmenumon, "-fn", dmenufont, "-nb",  "#162023", "-nf",  "#bbbbbb", "-sb",  "#5f87d7", "-sf",  "#000000", NULL };
 static const char *termcmd[]  = { "i3-sensible-terminal", NULL };
 
+/*First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = {"s", "alacritty", "--class", "scratchpad", NULL};
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
