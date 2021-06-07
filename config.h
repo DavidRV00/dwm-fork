@@ -35,7 +35,7 @@ static const Rule rules[] = {
 	 */
  	/* class      instance    title       tags mask     iscentered   isfloating   monitor    scratch key */
 	{ NULL,       NULL,       NULL,       0,            1,           0,           -1,        0 },
- 	{ NULL,       NULL,   "scratchpad",   0,            1,           1,           -1,       's' },
+ 	{ NULL,     "scratchpad", NULL,       0,            1,           1,           -1,       's' },
 	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1,        0 },
 	{ "mpv",      NULL,       NULL,       1 << 1,       0,           0,           -1,        0 },
 };
