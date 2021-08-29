@@ -44,6 +44,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
@@ -72,7 +73,10 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-b", "-m", dmenumon, "-fn", dmenufont, "-nb",  "#162023", "-nf",  "#bbbbbb", "-sb",  "#5f87d7", "-sf",  "#000000", NULL };
 static const char *termcmd[]  = { "terminal", NULL };
 static const char *edcmd[]  = {  "editor", NULL };
+static const char *termfmcmd[]  = {  "termfm", NULL };
+static const char *guifmcmd[]  = {  "guifm", NULL };
 static const char *browsercmd[]  = { "browser", NULL };
+static const char *browsersesscmd[]  = { "browsersess", NULL };
 static const char *powercmd[] = { "power", "-b", NULL };
 static const char *notewindowcmd[] = { "notewindow", NULL };
 static const char *tempnotewindowcmd[] = { "tempnotewindow", NULL };
@@ -84,12 +88,22 @@ static const char *passmenucmd[] = { "passmenu", "-b", NULL };
 //static const char *scratchpadcmd[] = {"s", "alacritty", "--class", "scratchpad", NULL};
 static const char *scratchpadcmd[] = {"s", "umpv", NULL};
 
+// TODO: media actions (like, pause-toggle, shuf, etc)
+// TODO: pipeclip
+// TODO: nice summoning/desummoning of apps (email, chat, calendar, feeds, notes and other priveleged data)
+// TODO: fix up movement and resizing?
+// TODO: convenient search/menus (radio, spotsearch, browser-open, ...)
+// TODO: fullscreen
+// TODO: simultaneous monitor switching
 static Key keys[] = {
 	/* modifier                     key        		function        argument */
 	{ MODKEY|ShiftMask,             XK_semicolon, spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, 		spawn,          {.v = termcmd } },
 	{ MODKEY|ControlMask|ShiftMask, XK_Return, 		spawn,          {.v = edcmd } },
+	{ MODKEY|ShiftMask,             XK_m, 		    spawn,          {.v = termfmcmd } },
+	{ MODKEY|ControlMask|ShiftMask, XK_m, 		    spawn,          {.v = guifmcmd } },
 	{ MODKEY,                       XK_i, 		    spawn,          {.v = browsercmd } },
+	{ MODKEY|ShiftMask,             XK_i, 		    spawn,          {.v = browsersesscmd } },
 	{ MODKEY|ShiftMask,             XK_n,      		spawn,          {.v = notewindowcmd } },
 	{ MODKEY|ShiftMask,             XK_t,      		spawn,          {.v = tempnotewindowcmd } },
 	{ MODKEY|ShiftMask,             XK_x,      		spawn,          {.v = mkexecwindowcmd } },
